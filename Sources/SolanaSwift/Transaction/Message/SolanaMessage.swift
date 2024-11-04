@@ -101,7 +101,7 @@ extension SolanaMessageLegacy {
     public func toHuman() -> Any {
         var instructions: [SolanaInstruction] = []
         for i in compiledInstructions {
-            guard Int(i.programIdIndex) < self.staticAccountKeys.count else { continue }
+            guard Int(i.programIdIndex) < self.staticAccountKeys.count, i.data.count > 0 else { continue }
             let programId = self.staticAccountKeys[Int(i.programIdIndex)]
             let decodeInstruction = SolanaInstructionDecoder.decode(programId: programId, data: i.data, signers: [])
             instructions.append(decodeInstruction)
